@@ -5,10 +5,6 @@ error_reporting(-1);
  *  work_time 10.02 - 6 часов
  * 
  */
-
-
-
-
 function var_dumpe($elem)
 {
     echo ('<pre>');
@@ -33,7 +29,7 @@ $task_list = $controller->get_task_list();
 
 $fgh = trim(strrchr($_SERVER['REQUEST_URI'], '/'), '/');
 if (!empty($_GET)) var_dumpe($_GET);
-
+var_dumpe($_SESSION);
 
 ?>
 
@@ -58,8 +54,8 @@ if (!empty($_GET)) var_dumpe($_GET);
                 <col width="40%">
                 <col width="5%">
                 <tr>
-                    <td>id</td>
-                    <td>Имя</td>
+                    <td><a href="?sort_by=id">id</a></td>
+                    <td><a href="?sort_by=task_name">Имя</a></td>
                     <td>Эл адрес</td>
                     <td>Задача</td>
                     <td>Выполненно?</td>

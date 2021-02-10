@@ -12,9 +12,9 @@ class TaskModel extends Model {
         $statement->bindParam(':task_text', $task_text);
         $statement->execute();
     }
-    public function get_task_list()
+    public function get_task_list($sort_fields = 'create_date', $sort = 'DESC')
     {
-        $sql = "SELECT * FROM tasks ORDER BY create_date DESC";
+        $sql = "SELECT * FROM tasks ORDER BY '$sort_fields' '$sort'";
         $statement = $this->pdo->query($sql); //->fetchAll()
         return $statement;
     }
