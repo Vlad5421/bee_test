@@ -1,8 +1,12 @@
 <?php
 session_start();
 $sort_param = $_SESSION['sort_param'];
-$sort_param['field'] = $_GET['sort_by'];
-$sort_param['sort'] = (!isset($_SESSION['sort_param']['sort']) or empty($_SESSION['sort_param']['sort']) or $_SESSION['sort_param']['sort'] == 'ASC') ? 'DESC' : 'ASC';
+if (isset($_GET['sort_by'])) {
+    $sort_param['field'] = $_GET['sort_by'];
+    $sort_param['sort'] = (!isset($_SESSION['sort_param']['sort']) or empty($_SESSION['sort_param']['sort']) or $_SESSION['sort_param']['sort'] == 'ASC') ? 'DESC' : 'ASC';
+}
+
+
 if (isset($_GET['list_page']) && !empty($_GET['list_page']))
     $sort_param['list_page'] = $_GET['list_page'];
 $_SESSION['sort_param'] = $sort_param;

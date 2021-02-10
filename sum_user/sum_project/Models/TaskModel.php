@@ -18,10 +18,11 @@ class TaskModel extends Model {
         $sql = "SELECT * FROM tasks ORDER BY $sort_fields $sort LIMIT $offset, $limit";
         $statement = $this->pdo->query($sql); //->fetchAll()
 
-        // $sql_count = "SELECT COUNT(*) FROM tasks WHERE calories > 100";
-        // $res = $conn->query($sql);
-        // $count = $res->fetchColumn();
-        return $statement;
+        $sql_count = "SELECT COUNT(*) FROM tasks";
+        $res = $this->pdo->query($sql_count);
+        $count = $res->fetchColumn();
+
+        return ['tasks'=>$statement, 'count'=>$count];
     }
 
 }

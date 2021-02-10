@@ -24,3 +24,12 @@ td a:hover {
 .form_wrapper {
     max-width: 46%;
 }
+.page_row {
+    display: flex;
+    justify-content: center;
+}
+.page_a {
+    display: block;
+    padding: 5px;
+    margin: 0 5px;
+}

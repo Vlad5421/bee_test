@@ -27,10 +27,12 @@ if (isset($_POST) && !empty($_POST)) {
     $controller->create_task();
 }
 $task_list = $controller->get_task_list();
+$tasks = $task_list[0];
+$page = $task_list[1];
 
 $fgh = trim(strrchr($_SERVER['REQUEST_URI'], '/'), '/');
 if (!empty($_GET)) var_dumpe($controller->get_local);
-// var_dumpe($_SERVER);
+// var_dumpe($task_list);
 
 ?>
 
@@ -62,7 +64,7 @@ if (!empty($_GET)) var_dumpe($controller->get_local);
                     <td>Выполненно?</td>
                 </tr>
             
-                <?php foreach ($task_list as $task): ?>
+                <?php foreach ($tasks as $task): ?>
                     <!-- <div class="d-flex justify-content-between w-100 p-2"> tr -->
                     <tr>
                         <?php foreach ($task as $key => $value): ?>
@@ -85,6 +87,11 @@ if (!empty($_GET)) var_dumpe($controller->get_local);
                     <!-- </div> -->
                 <?php endforeach; ?>
             </table>
+            <div class="page_row">
+            <?php for ($i=1; $i <= $page ; $i++) : ?> 
+                <a href="Controllers/sort_task.php?list_page=<?=$i?>" class="page_a"><?=$i?></a>
+            <?php endfor ?>
+            </div>
         </div>
 
         <div class="m-5 w-25">
