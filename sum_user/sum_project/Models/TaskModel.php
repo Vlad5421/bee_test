@@ -12,10 +12,15 @@ class TaskModel extends Model {
         $statement->bindParam(':task_text', $task_text);
         $statement->execute();
     }
-    public function get_task_list($sort_fields = 'create_date', $sort = 'DESC')
+    public function get_task_list(string $sort_fields = 'create_date', string $sort = 'DESC',int $list_page = 1, int $limit = 3)
     {
-        $sql = "SELECT * FROM tasks ORDER BY '$sort_fields' '$sort'";
+        $offset = $limit * ($list_page - 1);
+        $sql = "SELECT * FROM tasks ORDER BY $sort_fields $sort LIMIT $offset, $limit";
         $statement = $this->pdo->query($sql); //->fetchAll()
+
+        // $sql_count = "SELECT COUNT(*) FROM tasks WHERE calories > 100";
+        // $res = $conn->query($sql);
+        // $count = $res->fetchColumn();
         return $statement;
     }
 

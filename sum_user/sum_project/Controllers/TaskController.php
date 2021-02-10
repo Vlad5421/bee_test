@@ -14,7 +14,7 @@ class TaskController {
     ];
     protected $model;
     protected $post_local = null;
-    protected $get_local = null;
+    public $get_local = null;
     protected $session_local = null;
 
     public function __construct(){
@@ -24,13 +24,9 @@ class TaskController {
             $this->task_text = $_POST['task_text'];
         }
         $this->model = new TaskModel();
-        if (isset($_POST) && !emty($_POST)) $post_local = $_POST;
-        if (isset($_GET) && !emty($_GET)) $get_local = $_GET;
+        if (isset($_POST) && !empty($_POST)) $this->post_local = $_POST;
+        if (isset($_GET) && !empty($_GET)) $this->get_local = $_GET;
         session_start();
-        if ($this->get_local != NULL && isset($this->get_local['sort_by']) && !empty($this->get_local['sort_by'])){
-            $_SESSION['sort_param']['field'] = $this->get_local['sort_by'];
-            $_SESSION['sort_param']['sort'] = ($_SESSION['sort_param']['sort'] == 'DESK') ? 'ASC' : 'DESC';
-        }
         $this->session_local = $_SESSION;
 
     }
@@ -45,9 +41,11 @@ class TaskController {
 
     public function get_task_list()
     {
-        $sort_fields = $this->session_local['sort_param']['field'];
+        $sort_field = $this->session_local['sort_param']['field'];
         $sort = $this->session_local['sort_param']['sort'];
-        $geted_list = $this->model->get_task_list($sort_fields, $sort);
+        $list_page = (isset($this->session_local['sort_param']['list_page'])) ? $this->session_local['sort_param']['list_page'] : 1;
+        
+        $geted_list = $this->model->get_task_list($sort_field, $sort, $list_page);
         $new_list = [];
         while ($row = $geted_list->fetch()){
             $item_new_list = [];
