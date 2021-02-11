@@ -82,20 +82,24 @@ class TaskController {
     }
 
     public function change_task(){
-        $this->task_id = $_SESSION['changed_task_id'];
-        $new_text = $_POST['task_text'];
-        $change_date = date("Y-m-d H:i:s");
-        $change = false;
-        $performance = false;
-        if (isset($_POST['performed']) && $_POST['performed'] == 'on' && $this->performed == 0) {
-            $performance = $this->model->set_task_performed($this->task_id, 'on');
-        } elseif (!isset($_POST['performed']) && $this->performed == 1) {
-            $performance = $this->model->set_task_performed($this->task_id, 'off');
+        if (!isset($this->session_local['user']) || empty($this->session_local['user']) ) {
+            header("Location: change_task_ctl");
+        } else {
+            $this->task_id = $_SESSION['changed_task_id'];
+            $new_text = $_POST['task_text'];
+            $change_date = date("Y-m-d H:i:s");
+            $change = false;
+            $performance = false;
+            if (isset($_POST['performed']) && $_POST['performed'] == 'on' && $this->performed == 0) {
+                $performance = $this->model->set_task_performed($this->task_id, 'on');
+            } elseif (!isset($_POST['performed']) && $this->performed == 1) {
+                $performance = $this->model->set_task_performed($this->task_id, 'off');
+            }
+            if ($this->task_text !== $new_text) {
+                $change = $this->model->change_task_text($this->task_id, $new_text, $change_date);
+            }
+            if ($change) unset($_SESSION['changed_task_id']);
+            return [$change, $performance];
         }
-        if ($this->task_text !== $new_text) {
-            $change = $this->model->change_task_text($this->task_id, $new_text, $change_date);
-        }
-        if ($change) unset($_SESSION['changed_task_id']);
-        return [$change, $performance];
     }
 }
