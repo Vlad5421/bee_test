@@ -36,6 +36,9 @@ switch ($action) {
     case 'sign_in':
         $view = 'views/sign_in.php';
         break;
+    case 'change_task':
+        $view = 'views/change_task.php';
+        break;
     
     default:
         $view = 'views/task_list.php';

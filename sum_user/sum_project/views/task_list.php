@@ -10,9 +10,9 @@ $page = $task_list[1];
 
 
 if (!empty($_GET)) var_dumpe($controller->get_local);
-$list_page = $_SESSION['sort_param']['list_page'];
-
-// var_dumpe($_SERVER);
+if (isset($_SESSION['sort_param']['list_page'])) $list_page = $_SESSION['sort_param']['list_page'];
+else $list_page = 1;
+var_dumpe($_SESSION);
 
 ?>
 

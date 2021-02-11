@@ -10,8 +10,8 @@ session_start();
 // var_dumpe($_SESSION);
 // var_dumpe($_SERVER["REQUEST_URI"]);
 // var_dumpe($_SERVER);
-
-$_SESSION['changed_task_id'] = $_GET['id'];
+if (!isset($_SESSION['changed_task_id']) || empty($_SESSION['changed_task_id']))
+    $_SESSION['changed_task_id'] = $_GET['id'];
 
 if ($_SESSION['user']['role'] != 'admin') {
     $text = 'Для изменения задачи нужно авторизоваться, каак администратор!';
@@ -19,5 +19,9 @@ if ($_SESSION['user']['role'] != 'admin') {
     header("Location: $view");
     die;
 } else {
-    $view = 'change_task.php';
+
+
+
+    $view = 'change_task';
+    header("Location: $view");
 }

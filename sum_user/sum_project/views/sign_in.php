@@ -4,9 +4,11 @@ if (isset($_GET['message']) && !empty($_GET['message'])) $message = $_GET['messa
 
 if (isset($_POST) && !empty($_POST)) {
     $user = new UserController();
-    $user->user_auth();
-}
+    $auth_result = $user->user_auth();
 
+}
+session_start();
+var_dumpe($_SESSION);
 
 ?>
 
@@ -33,6 +35,9 @@ if (isset($_POST) && !empty($_POST)) {
         <label for="user_password">Пароль:</label>
         <input type="password" class="form-control" name="user_password" id="user_password" placeholder="Ваш парль">
     </div>
+    <?php if (isset($auth_result) && $auth_result == false): ?>
+        <div class="alert alert-danger" role="alert">Введены некорректные данные</div>
+    <?php endif ?>
     <button type="submit" class="btn btn-primary">Войти</button>
 </form>
 </body>
