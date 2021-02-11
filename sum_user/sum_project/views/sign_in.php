@@ -5,13 +5,10 @@ if (isset($_GET['message']) && !empty($_GET['message'])) $message = $_GET['messa
 if (isset($_POST) && !empty($_POST)) {
     $user = new UserController();
     $auth_result = $user->user_auth();
-
 }
 session_start();
-var_dumpe($_SESSION);
-
+var_dump($_SESSION);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,23 +19,26 @@ var_dumpe($_SESSION);
     <title>Авторизация</title>
 </head>
 <body>
-<?php if(isset($message)): ?>
-    <h3><?= $message ?></h3>
-<?php endif ?>
-<form action="#" method="post" class="task_form">
-    <div class="form-group">
-        <label for="user_email">Email адрес:</label>
-        <input type="email" class="form-control" name="user_email" id="user_email" aria-describedby="emailHelp" placeholder="Ваш email">
-        <small id="emailHelp" class="form-text text-muted">Укажите email</small>
-    </div>
-    <div class="form-group">
-        <label for="user_password">Пароль:</label>
-        <input type="password" class="form-control" name="user_password" id="user_password" placeholder="Ваш парль">
-    </div>
-    <?php if (isset($auth_result) && $auth_result == false): ?>
-        <div class="alert alert-danger" role="alert">Введены некорректные данные</div>
+<h1 class="text-center">Авторизация</h1>
+<section class="p-2 m-3 d-flex flex-column align-items-center" style="border: 2px solid #ccc; border-radius: 10px; padding: 10px;">
+    <?php if(isset($message)): ?>
+        <h3><?= $message ?></h3>
     <?php endif ?>
-    <button type="submit" class="btn btn-primary">Войти</button>
-</form>
+    <form action="#" method="post" class="task_form w-50">
+        <div class="form-group">
+            <label for="user_email">Email адрес:</label>
+            <input type="email" class="form-control" name="user_email" id="user_email" aria-describedby="emailHelp" placeholder="Ваш email">
+            <small id="emailHelp" class="form-text text-muted">Укажите email</small>
+        </div>
+        <div class="form-group">
+            <label for="user_password">Пароль:</label>
+            <input type="password" class="form-control" name="user_password" id="user_password" placeholder="Ваш парль">
+        </div>
+        <?php if (isset($auth_result) && $auth_result == false): ?>
+            <div class="alert alert-danger" role="alert">Введены некорректные данные</div>
+        <?php endif ?>
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </form>
+</secton>
 </body>
 </html>

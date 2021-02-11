@@ -10,7 +10,7 @@ class TaskModel extends Model {
         $statement->bindParam(':task_name', $task_name);
         $statement->bindParam(':task_email', $task_email);
         $statement->bindParam(':task_text', $task_text);
-        $statement->execute();
+        return $statement->execute();
     }
     public function get_task_list(string $sort_fields = 'create_date', string $sort = 'DESC',int $list_page = 1, int $limit = 3)
     {
@@ -30,11 +30,13 @@ class TaskModel extends Model {
         return $statement->fetch();
     }
 
-    public function change_task_text($id, $new_text){
+    public function change_task_text($id, $new_text, $change_date){
         $data = [
             'new_text' => $new_text,
+            'change_date' => $change_date,
+            'id' => $id,
         ];
-        $sql = "UPDATE tasks SET task_text = :new_text  WHERE id=$id";
+        $sql = "UPDATE tasks SET task_text = :new_text, change_date = :change_date  WHERE id = :id";
         $statement = $this->pdo->prepare($sql);
         return $statement->execute($data);
     }

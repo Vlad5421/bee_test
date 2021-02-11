@@ -24,11 +24,21 @@ class UserController {
                     $task_id = $_SESSION['changed_task_id'];
                     $link = "Controllers/change_task.php?id=$task_id";
                     header("Location: $link");
+                    return;
+                } else {
+                    $link = 'task_list';
+                    header("Location: $link");
+                    return;
                 }
+
             }
         } else {
             return $user_from_db;
         }
-        
+    }
+
+    public function check_status(){
+        $role = isset($_SESSION['user']) ? $_SESSION['user']['role'] : 'guest';
+        return $role;
     }
 }   

@@ -4,12 +4,10 @@ $task = new TaskController();
 $task->get_task();
 
 if (!empty($_POST)) {
-    var_dumpe($_POST);
     $change_result = $task->change_task();
     $task->get_task();
 }
 $performed = ($task->performed == 0) ? '' : 'checked';
-// var_dumpe($task);
 
 ?>
 <!DOCTYPE html>
@@ -23,7 +21,6 @@ $performed = ($task->performed == 0) ? '' : 'checked';
 </head>
 <body>
     <h1 style="text-align: center;">Изменение задачи</h1>
-    
     <div class="d-flex flex-column justify-content-start align-items-center">
         <?php if (isset($change_result) && $change_result === true): ?>
             <div class="alert alert-success w-50" role="alert">Изменения сохранены</div>
@@ -52,6 +49,5 @@ $performed = ($task->performed == 0) ? '' : 'checked';
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
     </div>
-
 </body>
 </html>

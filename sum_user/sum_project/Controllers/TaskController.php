@@ -20,7 +20,7 @@ class TaskController {
     ];
     protected $model;
     protected $post_local = null;
-    public $get_local = null;
+    protected $get_local = null;
     protected $session_local = null;
 
     public function __construct(){
@@ -34,11 +34,10 @@ class TaskController {
         if (isset($_GET) && !empty($_GET)) $this->get_local = $_GET;
         session_start();
         $this->session_local = $_SESSION;
-
     }
 
     public function create_task(){
-        $this->model->create_task($this->task_name, $this->task_email, $this->task_text);
+        return $this->model->create_task($this->task_name, $this->task_email, $this->task_text);
     }
 
     public function get_task_list()
@@ -52,7 +51,10 @@ class TaskController {
         $new_list = [];
         while ($row = $geted_list['tasks']->fetch()){
             $item_new_list = [];
-            if ($row['change_date'] = $row['create_date']) $row['change_date'] = '';
+            if ($row['change_date'] == $row['create_date']) $row['change_date'] = '';
+            else $row['change_date'] = 'Изменено администратором: '. $row['change_date'];
+            $row['performed'] = ($row['performed'] != 0) ? 'Выполненно' : '';
+
             foreach ($this->task_list as $key => $value) {
                 $item_new_list[$key] = $row[$value];
             }
@@ -63,25 +65,32 @@ class TaskController {
     }
 
     public function get_task(){
-        // session_start();
-        $this->task_id = $_SESSION['changed_task_id'];
-        $task = $this->model->get_task($this->task_id);
-        $this->task_name = $task['task_name'];
-        $this->task_email = $task['task_email'];
-        $this->task_text = $task['task_text'];
-        $this->change_date = $task['change_date'];
-        $this->create_date = $task['create_date'];
-        $this->performed = $task['performed'];
-
+        if (isset($_SESSION['changed_task_id'])) {
+            $this->task_id = $_SESSION['changed_task_id'];
+            $task = $this->model->get_task($this->task_id);
+            $this->task_name = $task['task_name'];
+            $this->task_email = $task['task_email'];
+            $this->task_text = $task['task_text'];
+            $this->change_date = $task['change_date'];
+            $this->create_date = $task['create_date'];
+            $this->performed = $task['performed'];
+        } else {
+            $link = 'task_list';
+            header("Location: $link");
+            return;
+        }
+        
     }
 
     public function change_task(){
         $this->task_id = $_SESSION['changed_task_id'];
         $new_text = $_POST['task_text'];
+        $change_date = date("Y-m-d H:i:s");
         $change = false;
         if ($this->task_text !== $new_text) {
-            $change = $this->model->change_task_text($this->task_id, $new_text);
+            $change = $this->model->change_task_text($this->task_id, $new_text, $change_date);
         }
+        if ($change) unset($_SESSION['changed_task_id']);
         return $change;
     }
 }
