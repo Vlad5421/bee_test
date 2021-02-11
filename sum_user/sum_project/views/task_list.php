@@ -79,16 +79,16 @@ $user_status = $user->check_status();
                 <h3>Создание задачи:</h3><hr>
                 <div class="form-group">
                     <label for="task_email">Email адрес:</label>
-                    <input type="email" class="form-control" name="task_email" id="task_email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="email" class="form-control" name="task_email" id="task_email" aria-describedby="emailHelp" placeholder="Enter email" required>
                     <small id="emailHelp" class="form-text text-muted">Укажите email ящик исполнителя.</small>
                 </div>
                 <div class="form-group">
                     <label for="task_name">Имя:</label>
-                    <input type="text" class="form-control" name="task_name" id="task_name" placeholder="Имя исполнителя">
+                    <input type="text" class="form-control" name="task_name" id="task_name" placeholder="Имя исполнителя" required>
                 </div>
                 <div class="form-group">
                     <label for="task_text">Опишите задачу:</label>
-                    <textarea class="form-control" name="task_text" id="task_text" rows="6"></textarea>
+                    <textarea class="form-control" name="task_text" id="task_text" rows="6" required></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Создать</button>
             </form>

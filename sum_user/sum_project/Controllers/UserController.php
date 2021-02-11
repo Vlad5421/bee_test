@@ -1,20 +1,20 @@
 <?php
 
 class UserController {
-    public $user_email;
+    public $user_login;
     public $user_password;
     protected $model;
 
     public function __construct(){
-        if (isset($_POST['user_email']) && !empty($_POST['user_email'])) {
-            $this->user_email = $_POST['user_email'];
+        if (isset($_POST['user_login']) && !empty($_POST['user_login'])) {
+            $this->user_login = $_POST['user_login'];
             $this->user_password = md5($_POST['user_password']);
         }
         $this->model = new UserModel();
     }
 
     public function user_auth(){
-        $user_from_db = $this->model->get_user($this->user_email);
+        $user_from_db = $this->model->get_user($this->user_login);
         if ($user_from_db == !false) {
             if ($this->user_password != $user_from_db['user_password']) return false;
             else {

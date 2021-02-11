@@ -24,13 +24,13 @@ if (isset($_POST) && !empty($_POST)) {
     <?php endif ?>
     <form action="#" method="post" class="task_form w-50">
         <div class="form-group">
-            <label for="user_email">Email адрес:</label>
-            <input type="email" class="form-control" name="user_email" id="user_email" aria-describedby="emailHelp" placeholder="Ваш email">
-            <small id="emailHelp" class="form-text text-muted">Укажите email</small>
+            <label for="user_login">Ваш логин:</label>
+            <input type="text" class="form-control" name="user_login" id="user_login" aria-describedby="loginHelp" placeholder="Ваш логин" required>
+            <small id="loginHelp" class="form-text text-muted">Укажите логин</small>
         </div>
         <div class="form-group">
             <label for="user_password">Пароль:</label>
-            <input type="password" class="form-control" name="user_password" id="user_password" placeholder="Ваш парль">
+            <input type="password" class="form-control" name="user_password" id="user_password" placeholder="Ваш парль" required>
         </div>
         <?php if (isset($auth_result) && $auth_result == false): ?>
             <div class="alert alert-danger" role="alert">Введены некорректные данные</div>
