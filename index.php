@@ -12,26 +12,26 @@ $action = trim(strrchr($queri[0], '/'), '/');
 
 switch ($action) {
     case 'sort_task':
-        $view = 'Controllers/sort_task.php';
+        $view = __DIR__.'/Controllers/sort_task.php';
         break;
     case 'logout':
-        $view = 'Controllers/logout.php';
+        $view = __DIR__.'/Controllers/logout.php';
         break;
     case 'task_list':
-        $view = 'views/task_list.php';
+        $view = __DIR__.'/views/task_list.php';
         break;
     case 'sign_in':
-        $view = 'views/sign_in.php';
+        $view = __DIR__.'/views/sign_in.php';
         break;
     case 'change_task_view':
-        $view = 'views/change_task.php';
+        $view = __DIR__.'/views/change_task.php';
         break;
     case 'change_task_ctl':
-        $view = 'Controllers/change_task.php';
+        $view = __DIR__.'/Controllers/change_task.php';
         break;
     
     default:
-        $view = 'views/task_list.php';
+        $view = __DIR__.'/views/task_list.php';
         break;
 }
 require_once $view;
