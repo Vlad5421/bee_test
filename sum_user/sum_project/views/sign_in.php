@@ -6,8 +6,6 @@ if (isset($_POST) && !empty($_POST)) {
     $user = new UserController();
     $auth_result = $user->user_auth();
 }
-session_start();
-var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">

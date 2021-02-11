@@ -2,5 +2,5 @@
 
 session_start();
 unset($_SESSION['user']);
-$link = $_SERVER['HTTP_REFERER'];
+$link = 'task_list';
 header("Location: $link");

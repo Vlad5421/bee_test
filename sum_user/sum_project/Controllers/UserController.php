@@ -6,7 +6,7 @@ class UserController {
     protected $model;
 
     public function __construct(){
-        if (isset($_POST) && !empty($_POST)) {
+        if (isset($_POST['user_email']) && !empty($_POST['user_email'])) {
             $this->user_email = $_POST['user_email'];
             $this->user_password = md5($_POST['user_password']);
         }
@@ -14,7 +14,7 @@ class UserController {
     }
 
     public function user_auth(){
-        $user_from_db = $this->model->get_user_pass($this->user_email);
+        $user_from_db = $this->model->get_user($this->user_email);
         if ($user_from_db == !false) {
             if ($this->user_password != $user_from_db['user_password']) return false;
             else {
@@ -22,7 +22,7 @@ class UserController {
                 $_SESSION['user'] = $user_from_db;
                 if (isset($_SESSION['changed_task_id']) && !empty($_SESSION['changed_task_id'])){
                     $task_id = $_SESSION['changed_task_id'];
-                    $link = "Controllers/change_task.php?id=$task_id";
+                    $link = "change_task_ctl?id=$task_id";
                     header("Location: $link");
                     return;
                 } else {
@@ -30,7 +30,6 @@ class UserController {
                     header("Location: $link");
                     return;
                 }
-
             }
         } else {
             return $user_from_db;

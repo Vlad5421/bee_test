@@ -1,8 +1,18 @@
 <?php
 
-require_once "Model.php";
-
 class TaskModel extends Model {
+
+    public function set_task_performed($id, $what)
+    {
+        if ($what == 'on'){
+            $data['performance'] = '1';
+        } elseif ($what == 'off') {
+            $data['performance'] = '0';
+        }
+        $sql = "UPDATE tasks SET performed = :performance WHERE id = $id";
+        $statement = $this->pdo->prepare($sql);
+        return $statement->execute($data);
+    }
 
     public function create_task($task_name, $task_email, $task_text){
         $sql = "INSERT INTO tasks (task_name, task_email, task_text) VALUE (:task_name, :task_email, :task_text)";

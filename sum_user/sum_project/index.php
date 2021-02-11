@@ -11,6 +11,9 @@ $action = trim(strrchr($queri[0], '/'), '/');
 
 
 switch ($action) {
+    case 'sort_task':
+        $view = 'Controllers/sort_task.php';
+        break;
     case 'logout':
         $view = 'Controllers/logout.php';
         break;
@@ -20,8 +23,11 @@ switch ($action) {
     case 'sign_in':
         $view = 'views/sign_in.php';
         break;
-    case 'change_task':
+    case 'change_task_view':
         $view = 'views/change_task.php';
+        break;
+    case 'change_task_ctl':
+        $view = 'Controllers/change_task.php';
         break;
     
     default:

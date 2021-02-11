@@ -9,15 +9,13 @@ $task_list = $controller->get_task_list();
 $tasks = $task_list[0];
 $page = $task_list[1];
 
-if (!empty($_GET)) var_dumpe($controller->get_local);
 if (isset($_SESSION['sort_param']['list_page'])) $list_page = $_SESSION['sort_param']['list_page'];
-else $list_page = 2;
+else $list_page = 1;
 
 $user = new UserController;
 $user_status = $user->check_status(); 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,19 +41,19 @@ $user_status = $user->check_status();
                 <col width="5%">
                 <col width="15%">
                 <tr>
-                    <td><a href="Controllers/sort_task.php?sort_by=id">id</a></td>
-                    <td><a href="Controllers/sort_task.php?sort_by=task_name">Имя</a></td>
-                    <td><a href="Controllers/sort_task.php?sort_by=task_email">Эл адрес</a></td>
+                    <td><a href="sort_task?sort_by=id">id</a></td>
+                    <td><a href="sort_task?sort_by=task_name">Имя</a></td>
+                    <td><a href="sort_task?sort_by=task_email">Эл. адрес</a></td>
                     <td>Задача</td>
-                    <td><a href="Controllers/sort_task.php?sort_by=performed">Статус выполнения</a></td>
-                    <td><a href="Controllers/sort_task.php?sort_by=change_date">Изменено</a></td>
+                    <td><a href="sort_task?sort_by=performed">Статус выполнения</a></td>
+                    <td><a href="sort_task?sort_by=change_date">Изменено</a></td>
                 </tr>
                 <?php foreach ($tasks as $task): ?>
                     <tr>
                         <?php foreach ($task as $key => $value): ?>
                             <?php if ($key == "Задача") : ?>
                                     <td>
-                                        <a href="Controllers/change_task.php?id=<?=$task['id']?>">
+                                        <a href="change_task_ctl?id=<?=$task['id']?>">
                                             <?= htmlspecialchars($value) ?>
                                         </a>
                                     </td>
@@ -72,13 +70,13 @@ $user_status = $user->check_status();
             </table>
             <div class="page_row">
             <?php for ($i=1; $i <= $page ; $i++) : ?> 
-                <a href="Controllers/sort_task.php?list_page=<?=$i?>" class="page_a"><?=$i?></a>
+                <a href="sort_task?list_page=<?=$i?>" class="page_a"><?=$i?></a>
             <?php endfor ?>
             </div>
         </div>
         <div class="m-5 w-25">
             <form action="#" method="post" class="task_form">
-                <h3>Сщздание задачи:</h3><hr>
+                <h3>Создание задачи:</h3><hr>
                 <div class="form-group">
                     <label for="task_email">Email адрес:</label>
                     <input type="email" class="form-control" name="task_email" id="task_email" aria-describedby="emailHelp" placeholder="Enter email">

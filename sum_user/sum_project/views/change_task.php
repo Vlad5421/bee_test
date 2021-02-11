@@ -22,9 +22,11 @@ $performed = ($task->performed == 0) ? '' : 'checked';
 <body>
     <h1 style="text-align: center;">Изменение задачи</h1>
     <div class="d-flex flex-column justify-content-start align-items-center">
-        <?php if (isset($change_result) && $change_result === true): ?>
+        <?php if (isset($change_result) && $change_result[0] === true): ?>
             <div class="alert alert-success w-50" role="alert">Изменения сохранены</div>
-        <?php elseif (isset($change_result) && $change_result === false):?>
+        <?php elseif (isset($change_result) && $change_result[0] === false && $change_result[1] === true):?>
+            <div class="alert alert-success w-50" role="alert">Выполненность изменена</div>
+        <?php elseif (isset($change_result) && $change_result[0] === false):?>
             <div class="alert alert-warning w-50" role="alert">Вы не внесли изменений</div>
         <?php endif ?>
         <form action="#" method="post" class="task_form w-50">
@@ -47,6 +49,7 @@ $performed = ($task->performed == 0) ? '' : 'checked';
                 <textarea class="form-control" name="task_text" id="task_text" rows="6"><?=$task->task_text?></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a href="task_list" class="btn btn-warning">Вернуться к списку</a>
         </form>
     </div>
 </body>
