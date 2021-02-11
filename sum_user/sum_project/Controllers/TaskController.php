@@ -41,10 +41,6 @@ class TaskController {
         $this->model->create_task($this->task_name, $this->task_email, $this->task_text);
     }
 
-    public function change_task_text(){
-        $this->model->change_task_text($task_text);
-    }
-
     public function get_task_list()
     {
         $sort_field = (isset($this->session_local['sort_param']['field'])) ? $this->session_local['sort_param']['field'] : 'id';
@@ -62,8 +58,7 @@ class TaskController {
             }
             $new_list[] = $item_new_list;
         }
-
-        $page = (($geted_list['count'] % 3) != 0) ? intdiv($geted_list['count'], 3) + 1 : $geted_list['count'] % 3;
+        $page = (($geted_list['count'] % 3) !== 0) ? intdiv($geted_list['count'], 3) + 1 : $geted_list['count'] / 3;
         return [$new_list, $page];
     }
 
@@ -82,7 +77,11 @@ class TaskController {
 
     public function change_task(){
         $this->task_id = $_SESSION['changed_task_id'];
-        $this->get_task();
-
+        $new_text = $_POST['task_text'];
+        $change = false;
+        if ($this->task_text !== $new_text) {
+            $change = $this->model->change_task_text($this->task_id, $new_text);
+        }
+        return $change;
     }
 }

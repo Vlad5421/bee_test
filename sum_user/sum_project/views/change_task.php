@@ -2,13 +2,13 @@
 
 $task = new TaskController();
 $task->get_task();
-$performed = ($task->performed == 0) ? '' : 'checked';
 
 if (!empty($_POST)) {
     var_dumpe($_POST);
-    // $task->change_task();
-    
+    $change_result = $task->change_task();
+    $task->get_task();
 }
+$performed = ($task->performed == 0) ? '' : 'checked';
 // var_dumpe($task);
 
 ?>
@@ -23,8 +23,13 @@ if (!empty($_POST)) {
 </head>
 <body>
     <h1 style="text-align: center;">Изменение задачи</h1>
-    <div class="d-flex justify-content-center">
-
+    
+    <div class="d-flex flex-column justify-content-start align-items-center">
+        <?php if (isset($change_result) && $change_result === true): ?>
+            <div class="alert alert-success w-50" role="alert">Изменения сохранены</div>
+        <?php elseif (isset($change_result) && $change_result === false):?>
+            <div class="alert alert-warning w-50" role="alert">Вы не внесли изменений</div>
+        <?php endif ?>
         <form action="#" method="post" class="task_form w-50">
             <div class="form-group">
                 <label for="task_email">Email адрес:</label>
@@ -44,7 +49,7 @@ if (!empty($_POST)) {
                 <label for="task_text">Опишите задачу:</label>
                 <textarea class="form-control" name="task_text" id="task_text" rows="6"><?=$task->task_text?></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Создать</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
         </form>
     </div>
 

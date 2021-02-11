@@ -13,7 +13,9 @@ $page = $task_list[1];
 if (!empty($_GET)) var_dumpe($controller->get_local);
 if (isset($_SESSION['sort_param']['list_page'])) $list_page = $_SESSION['sort_param']['list_page'];
 else $list_page = 2;
-var_dumpe($task_list);
+// var_dumpe($task_list);
+var_dumpe($_SESSION);
+// var_dumpe($page);
 
 ?>
 

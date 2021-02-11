@@ -21,7 +21,6 @@ class TaskModel extends Model {
         $sql_count = "SELECT COUNT(*) FROM tasks";
         $res = $this->pdo->query($sql_count);
         $count = $res->fetchColumn();
-
         return ['tasks'=>$statement, 'count'=>$count];
     }
 
@@ -31,9 +30,13 @@ class TaskModel extends Model {
         return $statement->fetch();
     }
 
-    public function change_task($id)
-    {
-        # code...
+    public function change_task_text($id, $new_text){
+        $data = [
+            'new_text' => $new_text,
+        ];
+        $sql = "UPDATE tasks SET task_text = :new_text  WHERE id=$id";
+        $statement = $this->pdo->prepare($sql);
+        return $statement->execute($data);
     }
 
 }
