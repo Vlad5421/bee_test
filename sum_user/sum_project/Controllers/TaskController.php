@@ -10,7 +10,9 @@ class TaskController {
         "id" => "id",
         "Имя" => "task_name",
         "Эл. адрес" => "task_email",
-        "Содержание" => "task_text",
+        "Задача" => "task_text",
+        "Выполненно" => "performed",
+        "Изменено" => "change_date",
     ];
     protected $model;
     protected $post_local = null;

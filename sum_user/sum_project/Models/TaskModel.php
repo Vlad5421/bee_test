@@ -16,7 +16,7 @@ class TaskModel extends Model {
     {
         $offset = $limit * ($list_page - 1);
         $sql = "SELECT * FROM tasks ORDER BY $sort_fields $sort LIMIT $offset, $limit";
-        $statement = $this->pdo->query($sql); //->fetchAll()
+        $statement = $this->pdo->query($sql);
 
         $sql_count = "SELECT COUNT(*) FROM tasks";
         $res = $this->pdo->query($sql_count);
