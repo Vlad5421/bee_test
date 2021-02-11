@@ -3,9 +3,13 @@
 
 class TaskController {
 
+    public $task_id;
     public $task_name;
     public $task_email;
     public $task_text;
+    public $change_date;
+    public $create_date;
+    public $performed;
     protected $task_list = [
         "id" => "id",
         "Имя" => "task_name",
@@ -20,13 +24,13 @@ class TaskController {
     protected $session_local = null;
 
     public function __construct(){
-        if (isset($_POST) && !empty($_POST)) {
-            $this->task_name = $_POST['task_name'];
-            $this->task_email = $_POST['task_email'];
-            $this->task_text = $_POST['task_text'];
+        if (!empty($_POST)) {
+            if(!empty($_POST['task_name'])) $this->task_name = $_POST['task_name'];
+            if(!empty($_POST['task_email'])) $this->task_email = $_POST['task_email'];
+            if(!empty($_POST['task_text'])) $this->task_text = $_POST['task_text'];
         }
         $this->model = new TaskModel();
-        if (isset($_POST) && !empty($_POST)) $this->post_local = $_POST;
+        if (!empty($_POST)) $this->post_local = $_POST;
         if (isset($_GET) && !empty($_GET)) $this->get_local = $_GET;
         session_start();
         $this->session_local = $_SESSION;
@@ -52,6 +56,7 @@ class TaskController {
         $new_list = [];
         while ($row = $geted_list['tasks']->fetch()){
             $item_new_list = [];
+            if ($row['change_date'] = $row['create_date']) $row['change_date'] = '';
             foreach ($this->task_list as $key => $value) {
                 $item_new_list[$key] = $row[$value];
             }
@@ -60,5 +65,24 @@ class TaskController {
 
         $page = (($geted_list['count'] % 3) != 0) ? intdiv($geted_list['count'], 3) + 1 : $geted_list['count'] % 3;
         return [$new_list, $page];
+    }
+
+    public function get_task(){
+        // session_start();
+        $this->task_id = $_SESSION['changed_task_id'];
+        $task = $this->model->get_task($this->task_id);
+        $this->task_name = $task['task_name'];
+        $this->task_email = $task['task_email'];
+        $this->task_text = $task['task_text'];
+        $this->change_date = $task['change_date'];
+        $this->create_date = $task['create_date'];
+        $this->performed = $task['performed'];
+
+    }
+
+    public function change_task(){
+        $this->task_id = $_SESSION['changed_task_id'];
+        $this->get_task();
+
     }
 }

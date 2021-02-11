@@ -10,7 +10,7 @@ session_start();
 // var_dumpe($_SESSION);
 // var_dumpe($_SERVER["REQUEST_URI"]);
 // var_dumpe($_SERVER);
-if (!isset($_SESSION['changed_task_id']) || empty($_SESSION['changed_task_id']))
+// if (!isset($_SESSION['changed_task_id']) || empty($_SESSION['changed_task_id']))
     $_SESSION['changed_task_id'] = $_GET['id'];
 
 if ($_SESSION['user']['role'] != 'admin') {

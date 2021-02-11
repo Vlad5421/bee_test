@@ -25,4 +25,15 @@ class TaskModel extends Model {
         return ['tasks'=>$statement, 'count'=>$count];
     }
 
+    public function get_task($id){
+        $sql = "SELECT * FROM tasks WHERE id = '$id'";
+        $statement = $this->pdo->query($sql);
+        return $statement->fetch();
+    }
+
+    public function change_task($id)
+    {
+        # code...
+    }
+
 }

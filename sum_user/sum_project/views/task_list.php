@@ -5,14 +5,15 @@ if (isset($_POST) && !empty($_POST)) {
     $controller->create_task();
 }
 $task_list = $controller->get_task_list();
+
 $tasks = $task_list[0];
 $page = $task_list[1];
 
 
 if (!empty($_GET)) var_dumpe($controller->get_local);
 if (isset($_SESSION['sort_param']['list_page'])) $list_page = $_SESSION['sort_param']['list_page'];
-else $list_page = 1;
-var_dumpe($_SESSION);
+else $list_page = 2;
+var_dumpe($task_list);
 
 ?>
 
